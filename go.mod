@@ -1,4 +1,4 @@
-module go-redis
+module redigo
 
 go 1.19
 

@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"go-redis/internal/domain"
-	"go-redis/internal/model/gormModel"
+	"redigo/internal/domain"
+	"redigo/internal/model/gormModel"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

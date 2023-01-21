@@ -1,8 +1,8 @@
 package service
 
 import (
-	"go-redis/internal/domain"
 	"log"
+	"redigo/internal/domain"
 
 	"github.com/google/uuid"
 )

@@ -1,5 +1,5 @@
 run:
-	go run ./cmd/goRedis
+	go run ./cmd/redigo
 
 migrate:
 	go run ./cmd/migration

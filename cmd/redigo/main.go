@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-redis/api"
+	"redigo/api"
 
 	_ "github.com/joho/godotenv/autoload"
 )

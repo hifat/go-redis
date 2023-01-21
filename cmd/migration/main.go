@@ -1,8 +1,8 @@
 package main
 
 import (
-	"go-redis/internal/database"
-	"go-redis/internal/model/gormModel"
+	"redigo/internal/database"
+	"redigo/internal/model/gormModel"
 )
 
 func main() {
