@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"go-redis/internal/constant"
-	"go-redis/internal/domain"
 	"net/http"
+	"redigo/internal/constant"
+	"redigo/internal/domain"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"

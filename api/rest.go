@@ -2,11 +2,11 @@ package api
 
 import (
 	"fmt"
-	"go-redis/internal/database"
-	"go-redis/internal/handler"
-	"go-redis/internal/repository"
-	"go-redis/internal/service"
 	"os"
+	"redigo/internal/database"
+	"redigo/internal/handler"
+	"redigo/internal/repository"
+	"redigo/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
