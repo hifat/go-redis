@@ -14,10 +14,17 @@ import (
 func RestAPI() {
 	r := gin.Default()
 	postgresDB := database.PostgresDB()
+	rdb := database.Redis()
 
 	newTaskRepo := repository.NewTaskRepository(postgresDB)
-	newTaskService := service.NewTaskService(newTaskRepo)
+	newTaskService := service.NewTaskService(newTaskRepo, rdb)
 	newTaskHandler := handler.NewTaskHandler(newTaskService)
+
+	r.GET("/ht", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "ok",
+		})
+	})
 
 	taskRoute := r.Group("/tasks")
 	{

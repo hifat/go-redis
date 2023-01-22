@@ -4,15 +4,20 @@ import (
 	"log"
 	"redigo/internal/domain"
 
+	"github.com/go-redis/redis"
 	"github.com/google/uuid"
 )
 
 type taskService struct {
-	taskRepo domain.TaskRepository
+	taskRepo    domain.TaskRepository
+	redisClient *redis.Client
 }
 
-func NewTaskService(taskRepo domain.TaskRepository) domain.TaskService {
-	return &taskService{taskRepo}
+func NewTaskService(taskRepo domain.TaskRepository, redisClient *redis.Client) domain.TaskService {
+	return &taskService{
+		taskRepo,
+		redisClient,
+	}
 }
 
 func (u taskService) Get(res *[]domain.ResponseTask) (err error) {
