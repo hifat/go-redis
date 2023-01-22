@@ -6,6 +6,5 @@ export let options = {
 }
 
 export default function() {
-   time.
    http.get("http://host.docker.internal:3500/ht")
 }
