@@ -6,6 +6,12 @@
 make migrate
 ```
 
+### Mock DB
+
+```bash
+make mock
+```
+
 ### Run app
 
 ```bash

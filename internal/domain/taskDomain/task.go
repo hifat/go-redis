@@ -1,8 +1,9 @@
-package domain
+package taskDomain
 
 import "github.com/google/uuid"
 
 type TaskRepository interface {
+	MockData(amount int) (err error)
 	Get(res *[]ResponseTask) (err error)
 	Show(ID uuid.UUID, res *ResponseTask) (err error)
 	Store(req RequestTask) (err error)
@@ -12,6 +13,7 @@ type TaskRepository interface {
 }
 
 type TaskService interface {
+	MockData(amount int) (err error)
 	Get(res *[]ResponseTask) (err error)
 	Show(ID uuid.UUID, res *ResponseTask) (err error)
 	Store(req RequestTask) (err error)

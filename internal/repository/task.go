@@ -1,7 +1,8 @@
 package repository
 
 import (
-	"redigo/internal/domain"
+	"fmt"
+	"redigo/internal/domain/taskDomain"
 	"redigo/internal/model/gormModel"
 
 	"github.com/google/uuid"
@@ -12,19 +13,35 @@ type taskRepository struct {
 	db *gorm.DB
 }
 
-func NewTaskRepository(db *gorm.DB) domain.TaskRepository {
+func NewTaskRepository(db *gorm.DB) taskDomain.TaskRepository {
 	return &taskRepository{db}
 }
 
-func (r taskRepository) Get(res *[]domain.ResponseTask) (err error) {
-	return r.db.Model(&gormModel.Task{}).Find(res).Error
+func (r taskRepository) MockData(amount int) (err error) {
+	var count int64
+	if err = r.db.Model(&gormModel.Task{}).Count(&count).Error; err != nil {
+		return err
+	}
+
+	tasks := []gormModel.Task{}
+	for i := 1; i <= amount; i++ {
+		tasks = append(tasks, gormModel.Task{
+			Name: fmt.Sprintf("Task %d", i),
+		})
+	}
+
+	return r.db.Create(&tasks).Error
 }
 
-func (r taskRepository) Show(ID uuid.UUID, res *domain.ResponseTask) (err error) {
+func (r taskRepository) Get(res *[]taskDomain.ResponseTask) (err error) {
+	return r.db.Model(&gormModel.Task{}).Order("created_at ASC").Find(res).Error
+}
+
+func (r taskRepository) Show(ID uuid.UUID, res *taskDomain.ResponseTask) (err error) {
 	return r.db.Model(&gormModel.Task{}).Where("id = ?", ID).First(&res).Error
 }
 
-func (r taskRepository) Store(req domain.RequestTask) (err error) {
+func (r taskRepository) Store(req taskDomain.RequestTask) (err error) {
 	newTask := gormModel.Task{
 		Name: req.Name,
 	}
@@ -32,7 +49,7 @@ func (r taskRepository) Store(req domain.RequestTask) (err error) {
 	return r.db.Create(&newTask).Error
 }
 
-func (r taskRepository) Update(ID uuid.UUID, req domain.RequestTask) (err error) {
+func (r taskRepository) Update(ID uuid.UUID, req taskDomain.RequestTask) (err error) {
 	editTask := gormModel.Task{
 		Name: req.Name,
 	}

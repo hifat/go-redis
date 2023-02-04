@@ -40,3 +40,17 @@ services:
       - 3000:3000
     volumes:
       - ./data/grafana:/var/lib/grafana
+
+  postgres:
+    image: postgres:12.3-alpine
+    build:
+      context: .
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=redigo
+    ports:
+      - 5433:5432
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh

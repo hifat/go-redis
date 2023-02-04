@@ -3,22 +3,22 @@ package handler
 import (
 	"net/http"
 	"redigo/internal/constant"
-	"redigo/internal/domain"
+	"redigo/internal/domain/taskDomain"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
 type taskHandler struct {
-	taskService domain.TaskService
+	taskService taskDomain.TaskService
 }
 
-func NewTaskHandler(taskService domain.TaskService) *taskHandler {
+func NewTaskHandler(taskService taskDomain.TaskService) *taskHandler {
 	return &taskHandler{taskService}
 }
 
 func (h taskHandler) Get(c *gin.Context) {
-	var tasks []domain.ResponseTask
+	var tasks []taskDomain.ResponseTask
 	err := h.taskService.Get(&tasks)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
@@ -41,7 +41,7 @@ func (h taskHandler) Show(c *gin.Context) {
 		return
 	}
 
-	var task domain.ResponseTask
+	var task taskDomain.ResponseTask
 	if err := h.taskService.Show(taskID, &task); err != nil {
 		switch err.Error() {
 		case constant.RecordNotFound:
@@ -62,7 +62,7 @@ func (h taskHandler) Show(c *gin.Context) {
 }
 
 func (h taskHandler) Store(c *gin.Context) {
-	var req domain.RequestTask
+	var req taskDomain.RequestTask
 	if err := c.ShouldBind(&req); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"message": http.StatusText(http.StatusInternalServerError),
@@ -88,7 +88,7 @@ func (h taskHandler) Update(c *gin.Context) {
 		})
 	}
 
-	var req domain.RequestTask
+	var req taskDomain.RequestTask
 	if err := c.ShouldBind(&req); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"message": http.StatusText(http.StatusBadRequest),
